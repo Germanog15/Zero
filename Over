@@ -1,0 +1,5 @@
+SELECT date,symbol, borrow_usd / supply_usd as utilization_perc FROM (
+select date,symbol,a.amount_usd as supply_usd,b.amount_usd as borrow_usd,ROW_NUMBER() OVER (PARTITION BY date) as rn
+from query_3742489 a left join query_3742526 b USING (date,symbol)
+WHERE date >= NOW() - interval '2' month
+) x
